@@ -1,0 +1,22 @@
+{
+    "name": "nymul-islam-moon/wedevs-academy",
+    "description": "A tutorial plugin for weDevs Academy",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Nymul Islam Moon",
+            "email": "towkir1997islam@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "WeDevs\\Academy\\": "includes/"
+        },
+        "files": [
+            "includes/functions.php"
+        ]
+    }
+}
