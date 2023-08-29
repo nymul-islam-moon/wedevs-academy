@@ -16,5 +16,6 @@
         public function dispatch_actions( $addressBook ) {
 
             add_action( 'admin_init', [ $addressBook, 'form_handler' ] );
+            add_action( 'admin_post_wd-ac-delete-address', [ $addressBook, 'delete_address' ] );
         }
     }

@@ -61,7 +61,7 @@
 
             # Here is some problem in the video can't see the code at the time 23.29
             $actions['edit'] = sprintf( '<a href="%s" title="%s">%s</a>', admin_url( 'admin.php?page=wedevs-academy&action=edit&id=' . $item->id ), $item->id, __( 'Edit', 'wedevs-academy' ), __( 'Edit', 'wedevs-academy' ) );
-//            $actions['delete'] = sprintf( '<a href="%s" class="submitdelete" onclick="return confirm(\'Are you sure?\');" title="%s">%s</a>', wp_nonce_url( 'admin-post.php?action=wd-ac-delete-address&id=' . $item->id ), 'wd-ac-delete-address' ), $item->id, __( 'Delete', 'wedevs-academy' ), __( 'Delete', 'wedevs-academy' ) );
+            $actions['delete'] = sprintf( '<a href="%s" class="submitdelete" onclick="return confirm(\'Are you sure?\');" title="%s">%s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=wd-ac-delete-address&id=' . $item->id ), 'wd-ac-delete-address' ), $item->id, __( 'Delete', 'wedevs-academy' ), __( 'Delete', 'wedevs-academy' ) );
             return sprintf(
               '<a href="%1$s"><strong>%2$s</strong></a> %3$s', admin_url( 'admin.php?page=wedevs-academy&action=view&id' . $item->id ), $item->name, $this->row_actions( $actions )
             );
@@ -81,7 +81,7 @@
 
             $this->_column_headers  = [ $column, $hidden, $sortable ];
 
-            $per_page               = 20;
+            $per_page               = 5;
             $current_page           = $this->get_pagenum();
             $offset                 = ( $current_page - 1 ) * $per_page;
 
