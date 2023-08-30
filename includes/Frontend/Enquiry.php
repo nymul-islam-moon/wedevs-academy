@@ -14,6 +14,7 @@
 
         /**
          * Shortcode handle method
+         *
          * @param array $atts
          * @param string $content
          * @return string

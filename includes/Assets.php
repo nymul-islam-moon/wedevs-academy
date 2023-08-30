@@ -20,7 +20,7 @@
                     'deps' => [ 'jQuery' ]
                 ],
 
-                'academy-script-script' => [
+                'academy-enquiry-script' => [
                     'src' => WD_ACADEMY_ASSETS . '/js/enquiry.js',
                     'version' => filemtime( WD_ACADEMY_PATH . '/assets/js/enquiry.js' ),
                     'deps' => [ 'jQuery' ]
@@ -53,15 +53,13 @@
         public function enqueue_assets() {
 
             $scripts = $this->get_scripts();
+            $styles = $this->get_styles();
 
             foreach ( $scripts as $key=> $script ) {
                 $deps = isset( $script[ 'deps' ] ) ? $script[ 'deps' ] : false;
 
                 wp_register_script( $key, $script[ 'src' ], $deps, $script[ 'version' ], true );
             }
-
-
-            $styles = $this->get_styles();
 
             foreach ( $styles as $key=> $style ) {
                 $deps = isset( $style[ 'deps' ] ) ? $style[ 'deps' ] : false;
