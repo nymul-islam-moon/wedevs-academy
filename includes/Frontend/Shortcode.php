@@ -4,7 +4,7 @@
 
     class Shortcode {
         /**
-         * Shortcode handler class
+         * Shortcode handler method
          */
         public function __construct() {
             add_shortcode('wedevs-academy', [ $this, 'render_shortcode' ]);
@@ -12,7 +12,7 @@
 
 
         /**
-         * Shortcode handle class
+         * Shortcode handle method
          * @param array $atts
          * @param string $content
          * @return string

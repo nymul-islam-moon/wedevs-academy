@@ -18,6 +18,12 @@
                     'src' => WD_ACADEMY_ASSETS . '/js/frontend.js',
                     'version' => filemtime( WD_ACADEMY_PATH . '/assets/js/frontend.js' ),
                     'deps' => [ 'jQuery' ]
+                ],
+
+                'academy-script-script' => [
+                    'src' => WD_ACADEMY_ASSETS . '/js/enquiry.js',
+                    'version' => filemtime( WD_ACADEMY_PATH . '/assets/js/enquiry.js' ),
+                    'deps' => [ 'jQuery' ]
                 ]
             ];
         }
@@ -32,6 +38,11 @@
                 'academy-admin-style' => [
                     'src' => WD_ACADEMY_ASSETS . '/css/admin.css',
                     'version' => filemtime( WD_ACADEMY_PATH . '/assets/css/admin.css' ),
+                ],
+
+                'academy-enquiry-style' => [
+                    'src' => WD_ACADEMY_ASSETS . '/css/enquiry.css',
+                    'version' => filemtime( WD_ACADEMY_PATH . '/assets/css/enquiry.css' ),
                 ]
             ];
         }
