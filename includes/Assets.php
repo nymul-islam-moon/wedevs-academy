@@ -12,8 +12,10 @@
         }
 
         public function enqueue_assets() {
-            wp_enqueue_script( 'academy-script', WD_ACADEMY_ASSETS . '/js/frontend.js', false, filemtime( WD_ACADEMY_PATH . '/assets/js/frontend.js' ), true );
-            wp_enqueue_style( 'academy-script', WD_ACADEMY_ASSETS . '/css/frontend.css', false, filemtime( WD_ACADEMY_PATH . '/assets/js/frontend.js' ), true );
+            wp_register_script( 'academy-script', WD_ACADEMY_ASSETS . '/js/frontend.js', false, filemtime( WD_ACADEMY_PATH . '/assets/js/frontend.js' ), true );
+            wp_register_style( 'academy-style', WD_ACADEMY_ASSETS . '/css/frontend.css', false, filemtime( WD_ACADEMY_PATH . '/assets/js/frontend.js' ) );
+
+
         }
 
     }

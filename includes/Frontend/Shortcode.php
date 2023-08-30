@@ -18,6 +18,10 @@
          * @return string
          */
         public function render_shortcode( $atts, $content='' ) {
-            return 'Hello from short code';
+
+            wp_enqueue_script( 'academy-script' );
+            wp_enqueue_style( 'academy-style' );
+
+            return '<div class="academy-shortcode">Hello from short code</div>';
         }
     }
