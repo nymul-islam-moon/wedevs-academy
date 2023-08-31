@@ -1,3 +1,6 @@
+input, textarea {
+    border-radius: 24px;
+}
 .form-row {
     margin-bottom: 15px;
 }

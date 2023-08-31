@@ -76,6 +76,10 @@
 
             new WeDevs\Academy\Assets();
 
+            if ( defined( 'DOING_AJAX' ) && DOINT_AJAX ) {
+                new WeDevs\Acadey\Ajax();
+            }
+
             if ( is_admin() ) {
                 new WeDevs\Academy\Admin();
             } else {
