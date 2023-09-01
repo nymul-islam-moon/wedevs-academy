@@ -1,21 +1,30 @@
 <?php
 
-    namespace WeDevs\Academy;
+namespace WeDevs\Academy;
+
+/**
+ * The admin class
+ */
+class Admin {
 
     /**
-     * The admin class
+     * Initialize the class
      */
-    class Admin {
-        public function __construct()
-        {
-            $addressBook = new Admin\AddressBook();
-            $this->dispatch_actions( $addressBook );
-            new Admin\Menu( $addressBook );
-        }
+    function __construct() {
+        $addressbook = new Admin\Addressbook();
 
-        public function dispatch_actions( $addressBook ) {
+        $this->dispatch_actions( $addressbook );
 
-            add_action( 'admin_init', [ $addressBook, 'form_handler' ] );
-            add_action( 'admin_post_wd-ac-delete-address', [ $addressBook, 'delete_address' ] );
-        }
+        new Admin\Menu( $addressbook );
     }
+
+    /**
+     * Dispatch and bind actions
+     *
+     * @return void
+     */
+    public function dispatch_actions( $addressbook ) {
+        add_action( 'admin_init', [ $addressbook, 'form_handler' ] );
+        add_action( 'admin_post_wd-ac-delete-address', [ $addressbook, 'delete_address' ] );
+    }
+}

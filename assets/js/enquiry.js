@@ -1,15 +1,21 @@
 ;(function($) {
-    $('#wedevs-enquiry-form').on('submit', function(e) {
-       e.preventDefault();
 
-       var data = $(this).serialize();
+    $('#wedevs-enquiry-form form').on('submit', function(e) {
+        e.preventDefault();
 
-        $.post( weDevsAcademy.ajaxurl, data, function ( data ) {
+        var data = $(this).serialize();
 
+        $.post(weDevsAcademy.ajaxurl, data, function(response) {
+            if (response.success) {
+                console.log(response.success);
+            } else {
+                alert(response.data.message);
+            }
         })
-        .fail( function () {
-            alert(weDevsAcademy.error);
-        })
+            .fail(function() {
+                alert(weDevsAcademy.error);
+            })
 
     });
+
 })(jQuery);

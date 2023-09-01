@@ -1,17 +1,17 @@
 <?php
-    namespace WeDevs\Academy;
+
+namespace WeDevs\Academy;
+
+/**
+ * Frontend handler class
+ */
+class Frontend {
 
     /**
-     * Frontend handler class
+     * Initialize the class
      */
-    class Frontend {
-
-        /**
-         * Initialize the constructor
-         */
-        public function __construct() {
-            new Frontend\Shortcode();
-
-            new Frontend\Enquiry();
-        }
+    function __construct() {
+        new Frontend\Shortcode();
+        new Frontend\Enquiry();
     }
+}
