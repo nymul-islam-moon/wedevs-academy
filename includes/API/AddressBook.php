@@ -37,7 +37,23 @@ class AddressBook extends WP_REST_Controller {
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/(?P<id>[\d]+)',
+			[
+				'args' => [
+					'id' => [
+						'description' => __( 'Unique identifier for the object.' ),
+						'type' => 'integer',
+					],
+				],
+			]
+		)
+
 	}
+
+
 
 	/**
 	 * Checks if a given request has access to read contacts.
