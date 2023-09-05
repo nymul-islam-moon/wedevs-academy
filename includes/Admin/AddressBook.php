@@ -5,7 +5,7 @@ namespace WeDevs\Academy\Admin;
 use WeDevs\Academy\Traits\FormError;
 
 /**
- * Addressbook Handler class
+ * AddressBook Handler class
  */
 class AddressBook {
 
