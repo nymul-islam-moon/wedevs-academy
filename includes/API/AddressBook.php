@@ -4,6 +4,7 @@ namespace WeDevs\Academy\API;
 
 use WP_REST_Controller;
 use WP_REST_Server;
+use WP_Error;
 
 /**
  * Addressbook Class
@@ -42,21 +43,26 @@ class AddressBook extends WP_REST_Controller {
 			$this->namespace,
 			'/' . $this->rest_base . '/(?P<id>[\d]+)',
 			[
-				'args' => [
-					'id' => [
-						'description' => __( 'Unique identifier for the object.' ),
-						'type' => 'integer',
+				'args'      => [
+					'id'    => [
+						'description'   => __( 'Unique identifier for the object.' ),
+						'type'          => 'integer',
 					],
 				],
 				[
-					'methods' => WP_REST_Server::READABLE,
-					'callback' => [ $this, 'get_item' ],
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-					'args' => [
-						'context' => $this->get_context_param( [ 'default' => 'view' ] ),
+					'methods'               => WP_REST_Server::READABLE,
+					'callback'              => [ $this, 'get_item' ],
+					'permission_callback'   => [ $this, 'get_item_permissions_check' ],
+					'args'                  => [
+						'context'       => $this->get_context_param( [ 'default'    => 'view' ] ),
 					],
 				],
-				'schema' => [ $this, 'get_item_schema' ],
+				[
+					'methods' => WP_REST_Server::DELETABLE,
+					'callback' => [ $this, 'delete_item' ],
+					'permission_callback' => [ $this, 'delete_item_permissions_check' ],
+				],
+				'schema'    => [ $this, 'get_item_schema' ],
 			]
 		);
 	}
@@ -95,6 +101,7 @@ class AddressBook extends WP_REST_Controller {
 			}
 		}
 
+
 		// change `per_page` to `number`
 		$args['number'] = $args['per_page'];
 		$args['offset'] = $args['number'] * ( $args['page'] - 1 );
@@ -120,6 +127,104 @@ class AddressBook extends WP_REST_Controller {
 		$response->header( 'X-WP-TotalPages', (int) $max_pages );
 
 		return $response;
+	}
+
+	/**
+	 * Get the contact, if the ID is valid
+	 * @param int $id supplied ID
+	 *
+	 * @return object|WP_Error
+	 */
+	protected function get_contact( $id ) {
+		$contact = wd_ac_get_address( $id );
+
+		if ( ! $contact ) {
+			return new \WP_Error(
+				'rest_contact_invalid_id',
+				__( 'Invalid Contact ID.' ),
+				[ 'status' => 404 ]
+			);
+		}
+
+		return $contact;
+	}
+
+	/**
+	 * Check if a given request has access to get a specific item
+	 * @param |WP_REST_Request $request
+	 *
+	 * @return boolean|\WP_Error
+	 */
+	public function get_item_permissions_check( $request ) {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		$contact = $this->get_contact( $request['id'] );
+
+		if ( is_wp_error( $contact ) ) {
+			return $contact;
+		}
+
+		return true;
+	}
+
+
+	/**
+	 * Retrieves one item from the collection.
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return void|\WP_Error|\WP_REST_Response
+	 */
+	public function get_item( $request ) {
+		$contact = $this->get_contact( $request['id'] );
+
+		$response = $this->prepare_item_for_response( $contact, $request );
+		$response = rest_ensure_response( $response );
+
+		return $response;
+	}
+
+	/**
+	 * Checks if a given request has access to delete a specific item.
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return true|WP_Error
+	 */
+	public function delete_item_permissions_check( $request ) {
+			return $this->get_item_permissions_check( $request );
+	}
+
+	/**
+	 * Delete one item from the collection.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return \WP_Error|\WP_REST_Response
+	 */
+	public function delete_item( $request ) {
+		$contact = $this->get_contact( $request['id'] );
+		$previous = $this->prepare_item_for_response( $contact, $request );
+
+		$deleted = wd_ac_delete_address( $request['id'] );
+
+		if ( ! $deleted ) {
+			return new WP_Error(
+				'rest_not_deleted',
+				__( 'Sorry, The contact could not be deleted.' ),
+				[ 'status' => 400 ]
+			);
+		}
+
+		$data = [
+			'deleted' => true,
+			'previous' => $previous->get_data(),
+		];
+
+		$response = rest_ensure_response( $data );
+
+		return $data;
 	}
 
 	/**
