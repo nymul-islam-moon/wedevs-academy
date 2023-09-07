@@ -48,9 +48,17 @@ class AddressBook extends WP_REST_Controller {
 						'type' => 'integer',
 					],
 				],
+				[
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => [ $this, 'get_item' ],
+					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+					'args' => [
+						'context' => $this->get_context_param( [ 'default' => 'view' ] ),
+					],
+				],
+				'schema' => [ $this, 'get_item_schema' ],
 			]
-		)
-
+		);
 	}
 
 
